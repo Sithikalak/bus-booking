@@ -469,7 +469,7 @@ export default function Booking() {
                 your exact pickup and drop-off points to calculate your fare.
               </p>
 
-              <div className="stops-select-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.25rem", alignItems: "start" }}>
+              <div className="stops-select-grid">
                 <SearchableSelect
                   label="Boarding / Pickup Stop"
                   hint="Where you will get on the bus"

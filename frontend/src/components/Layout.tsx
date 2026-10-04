@@ -417,18 +417,74 @@ export function Layout() {
         <div className="nav-inner">
           <Brand />
           <nav className={mobile ? "open" : ""} aria-label="Main navigation">
-            <NavLink to="/" end>
+            <NavLink to="/" end onClick={() => setMobile(false)}>
               Home
             </NavLink>
-            <NavLink to="/routes">Routes</NavLink>
-            <NavLink to="/track">Track</NavLink>
-            <NavLink to="/search">Book</NavLink>
-            <Link to="/#about">About</Link>
+            <NavLink to="/routes" onClick={() => setMobile(false)}>
+              Routes
+            </NavLink>
+            <NavLink to="/track" onClick={() => setMobile(false)}>
+              Track
+            </NavLink>
+            <NavLink to="/search" onClick={() => setMobile(false)}>
+              Book
+            </NavLink>
+            <Link to="/#about" onClick={() => setMobile(false)}>
+              About
+            </Link>
             {user && user.role !== "PASSENGER" && Boolean(portalLabel) && (
-              <NavLink to={portalUrl}>
+              <NavLink to={portalUrl} onClick={() => setMobile(false)}>
                 {portalLabel}
               </NavLink>
             )}
+
+            {/* Mobile-Only Drawer Actions Footer */}
+            <div className="mobile-nav-footer">
+              {user ? (
+                <div className="mobile-nav-user-box">
+                  <div className="mobile-nav-user-info">
+                    <div className="header-avatar-circle" style={{ width: 34, height: 34, fontSize: 13 }}>
+                      <span>{getInitials(user.firstName, user.lastName)}</span>
+                    </div>
+                    <div>
+                      <strong>{user.firstName} {user.lastName}</strong>
+                      <small>{roleDisplay}</small>
+                    </div>
+                  </div>
+                  <div className="mobile-nav-user-links">
+                    <Link to="/my-bookings" onClick={() => setMobile(false)}>
+                      <Ticket size={16} />
+                      <span>My Bookings</span>
+                    </Link>
+                    <Link to="/profile" onClick={() => setMobile(false)}>
+                      <UserRound size={16} />
+                      <span>My Profile</span>
+                    </Link>
+                    <button
+                      type="button"
+                      className="mobile-nav-logout-btn"
+                      onClick={() => {
+                        setMobile(false);
+                        logout();
+                      }}
+                    >
+                      <LogOut size={16} />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="mobile-nav-guest-actions">
+                  <Link to="/login" className="mobile-nav-signin-btn" onClick={() => setMobile(false)}>
+                    Sign In to Account
+                  </Link>
+                  <Link to="/search" className="mobile-nav-book-btn" onClick={() => setMobile(false)}>
+                    <span>Book a journey</span>
+                    <ArrowUpRight size={16} />
+                  </Link>
+                </div>
+              )}
+            </div>
           </nav>
           <div className="nav-actions">
             {user ? (
@@ -650,6 +706,13 @@ export function Layout() {
           </div>
         </div>
       </header>
+      {mobile && (
+        <div
+          className="mobile-nav-backdrop"
+          onClick={() => setMobile(false)}
+          aria-hidden="true"
+        />
+      )}
       <main id="main">
         <Outlet />
       </main>

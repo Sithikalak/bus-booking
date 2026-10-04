@@ -29,9 +29,8 @@ export default function SearchForm({ compact = false }: { compact?: boolean }) {
         e.preventDefault();
         navigate("/search?" + query({ origin, destination, date, time }));
       }}
-      style={{ alignItems: "flex-end" }}
     >
-      <div style={{ flex: "1.2 1 210px", minWidth: "200px" }}>
+      <div className="search-field search-field-origin">
         <SearchableSelect
           label="FROM"
           placeholder="Choose origin (type to search)..."
@@ -43,19 +42,18 @@ export default function SearchForm({ compact = false }: { compact?: boolean }) {
       </div>
 
       <button
-        className="swap"
+        className="swap search-swap-btn"
         type="button"
         aria-label="Swap origin and destination"
         onClick={() => {
           setOrigin(destination);
           setDestination(origin);
         }}
-        style={{ marginBottom: "6px" }}
       >
         <ArrowLeftRight size={17} />
       </button>
 
-      <div style={{ flex: "1.2 1 210px", minWidth: "200px" }}>
+      <div className="search-field search-field-destination">
         <SearchableSelect
           label="TO"
           placeholder="Choose destination (type to search)..."
@@ -68,33 +66,35 @@ export default function SearchForm({ compact = false }: { compact?: boolean }) {
         />
       </div>
 
-      <label style={{ flex: "1 1 170px", minWidth: "165px" }}>
-        <span>
-          <CalendarDays size={13} /> DEPARTURE DATE
-        </span>
-        <input
-          aria-label="Departure date"
-          type="date"
-          min={today()}
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-        />
-      </label>
+      <div className="search-datetime-row">
+        <label className="search-field search-field-date">
+          <span>
+            <CalendarDays size={13} /> DEPARTURE DATE
+          </span>
+          <input
+            aria-label="Departure date"
+            type="date"
+            min={today()}
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
+        </label>
 
-      <label style={{ flex: "1 1 150px", minWidth: "145px" }}>
-        <span>
-          <Clock size={13} /> DEPARTURE TIME
-        </span>
-        <input
-          aria-label="Earliest departure time"
-          type="time"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-        />
-      </label>
+        <label className="search-field search-field-time">
+          <span>
+            <Clock size={13} /> DEPARTURE TIME
+          </span>
+          <input
+            aria-label="Earliest departure time"
+            type="time"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+          />
+        </label>
+      </div>
 
-      <button className="btn search-btn-premium" type="submit" style={{ height: "52px", minHeight: "52px", marginBottom: "0" }}>
-        Find my journey
+      <button className="btn search-btn-premium search-field-submit" type="submit">
+        <span>Find my journey</span>
         <ArrowRight size={19} />
       </button>
     </form>
